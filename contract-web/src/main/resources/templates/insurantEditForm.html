@@ -1,0 +1,64 @@
+<div class="container">
+    <div class="row">
+        <form id="insurantEditForm" class="mx-auto">
+            <input id="idForm" type="text" class="d-none" name="id">
+            <div class="form-row">
+                <div class="form-row text-center">
+                    <div class="col-auto">
+                        <span>ФИО</span>
+                    </div>
+                    <div class="col-auto">
+                        <input type="text" class="form-control" id="surnameForm" name="surname" required>
+                        <div class="invalid-feedback text-center" data-name="surname">error</div>
+                        <label for="surnameForm" class="small">Фамилия<span class="text-danger">*</span></label>
+                    </div>
+                    <div class="col-auto">
+                        <input type="text" class="form-control" id="nameForm" name="name" required>
+                        <div class="invalid-feedback text-center" data-name="name" >error</div>
+                        <label for="nameForm" class="small">Имя<span class="text-danger">*</span></label>
+                    </div>
+                    <div class="col-auto">
+                        <input type="text" class="form-control" id="patronymicForm" name="patronymic">
+                        <label for="patronymicForm" class="small">Отчество</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-7">
+                    <div class="form-group row">
+                        <label for="birthdayForm" class="col-auto col-form-label">Дата рождения<span
+                                class="text-danger">*</span></label>
+                        <div class="col-7">
+                            <input type="date" class="form-control" id="birthdayForm" name="birthday" required>
+                            <div class="invalid-feedback text-center" data-name="birthday">error</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-5">
+                    <div class="form-group row">
+                        <label for="passport-seriesForm" class="col-auto col-form-label">Паспорт серия<span
+                                class="text-danger">*</span></label>
+                        <div class="col">
+                            <input type="text" maxlength="4"  class="form-control" id="passport-seriesForm" name="passport.series"
+                                   required>
+                            <div class="invalid-feedback text-center" data-name="passport.series">error</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-5">
+                    <div class="form-group row">
+                        <label for="passport-numberForm" class="col-auto col-form-label">№<span
+                                class="text-danger">*</span></label>
+                        <div class="col">
+                            <input type="text" maxlength="6" class="form-control" id="passport-numberForm" name="passport.number"
+                                   required>
+                            <div class="invalid-feedback text-center" data-name="passport.number">error</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

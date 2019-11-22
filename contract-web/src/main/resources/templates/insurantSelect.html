@@ -1,0 +1,178 @@
+<div class="container">
+    <div class="row">
+        <form id="insurantSearchForm"  class="mx-auto">
+            <div class="form-row">
+<!--                <div class="col-auto">-->
+<!--                    <span>ФИО</span>-->
+<!--                </div>-->
+                <div class="form-row text-center">
+                        <div class="col-auto">
+                            <input type="text" class="form-control" id="surnameSelect">
+                            <label for="surnameSelect" class="small">Фамилия</label>
+                        </div>
+                        <div class="col-auto">
+                            <input type="text" class="form-control" id="nameSelect">
+                            <label for="nameSelect" class="small">Имя</label>
+                        </div>
+                        <div class="col-auto">
+                            <input type="text" class="form-control" id="patronymicSelect">
+                            <label for="patronymicSelect" class="small">Отчество</label>
+                        </div>
+                        <div class="col-auto">
+                            <button type="button" id="insurantSearch" class="btn btn-dark"><i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="row">
+        <div class="col-auto mx-auto">
+            <table id="tableInsutrantSelect">
+            </table>
+            <script>
+                var $jQuery = jQuery.noConflict();
+                var $tableIS = $jQuery('#tableInsutrantSelect'),
+                    $selectIS = $jQuery('#insurantSelect'),
+                    $createIS = $jQuery('#insurantSelectNew'),
+                    $closeIS = $jQuery('#insurantSelectClose'),
+                    $searchIS = $jQuery('#insurantSearch'),
+                    selections = [];
+                $jQuery(function () {
+                    $tableIS.bootstrapTable({
+                        toolbar: "#toolbar",
+                        // height: getHeight(),
+                        idField: "id",
+                        search: false,
+                        showRefresh: false,
+                        showPaginationSwitch: false,
+                        showColumns: false,
+                        showToggle: false,
+                        singleSelect: true,
+                        clickToSelect: true,
+                        locale: "ru-RU",
+                        sortName: "contractNumber",
+                        columns: [
+                            {
+                                field: 'state',
+                                checkbox: true,
+                                align: 'center',
+                                valign: 'middle'
+                            }, {
+                                title: 'ID',
+                                field: 'id',
+                                name: 'id',
+                                visible: false
+                            }, {
+                                field: 'birthday',
+                                title: 'Дата рождения',
+                                valign: 'middle',
+                                align: 'center',
+                                width: 100,
+                                formatter: function (value, row, index) {
+                                    if (row.birthday) {
+                                        var d = new Date(row.birthday);
+                                        var n = d.toLocaleString('ru-RU', {
+                                            year: 'numeric',
+                                            month: 'numeric',
+                                            day: 'numeric'
+                                        });
+                                        return n;
+                                    } else {
+                                        return;
+                                    }
+                                }
+                            }, {
+                                field: 'insurant',
+                                title: 'ФИО',
+                                valign: 'middle',
+                                align: 'center',
+                                width: 350,
+                                formatter: function (value, row, index) {
+                                    if (row) {
+                                        return row.surname + ' ' + row.name + ' ' + (row.patronymic == null ? '' : row.patronymic);
+                                    } else {
+                                        return;
+                                    }
+                                }
+                            }, {
+                                field: 'passport',
+                                title: 'Паспортные данные',
+                                align: 'center',
+                                valign: 'middle',
+                                width: 50,
+                                formatter: function (value, row, index) {
+                                    if (row.passport) {
+                                        return row.passport.series + ' ' + row.passport.number;
+                                    } else {
+                                        return;
+                                    }
+                                }
+
+                            }
+                        ]
+                    });
+                    // sometimes footer render error.
+                    setTimeout(function () {
+                        $tableIS.bootstrapTable('resetView');
+                    }, 200);
+                    $tableIS.on('check.bs.table uncheck.bs.table ' +
+                        'check-all.bs.table uncheck-all.bs.table', function () {
+                        // if($tableIS.bootstrapTable('getSelections').length==1) {
+                        $selectIS.prop('disabled', !$tableIS.bootstrapTable('getSelections').length);
+                        selections = getIdSelections();
+                        // } else{
+                        //     $selectIS.prop('disabled', true);
+                        // }
+                    });
+                    $closeIS.click(function () {
+                        // document.location.href='/contractForm';
+                    });
+                    $createIS.click(function () {
+                        // document.location.href='/contractForm';
+                    });
+                    $selectIS.click(function () {
+                        // var ids = getIdSelections();
+                        // document.location.href='/contractForm/'+ids;
+                        // $remove.prop('disabled', true)
+
+                    });
+                    $searchIS.click(function () {
+                        var opts =
+                            {
+                                surname: $jQuery("#surnameSelect").val(),
+                                name: $jQuery("#nameSelect").val(),
+                                patronymic: $jQuery("#patronymicSelect").val()
+                            };
+                        // console.log(JSON.stringify(opts));
+                        $jQuery.ajax({
+                            url: '/jsonInsurantSelectData',
+                            type: "POST",
+                            dataType: 'json',
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify(opts),
+                            async: true
+                        }).done(function (data) {
+                            // console.log("done",data);
+                            if (data) {
+                                $tableIS.bootstrapTable('load', data);
+                            }
+                        }).fail(function (data) {
+                            console.log("fail", data);
+                        });
+
+
+                    });
+                });
+
+                function getIdSelections() {
+                    return $jQuery.map($tableIS.bootstrapTable('getSelections'), function (row) {
+                        return row.id
+                    });
+                }
+            </script>
+
+        </div>
+    </div>
+
+</div>

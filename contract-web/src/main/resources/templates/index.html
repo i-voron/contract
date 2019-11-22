@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Договоры</title>
+    
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/combine/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
+<!--          href="https://cdn.jsdelivr.net/combine/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css,npm/bootstrap@4.3.1/dist/css/bootstrap-grid.min.css">-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-table@1.15.5/dist/bootstrap-table.min.css">
+
+
+    <!--    <link rel="stylesheet"-->
+<!--          href="https://cdn.jsdelivr.net/combine/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css,npm/bootstrap@3.4.1/dist/css/bootstrap-theme.min.css">-->
+
+    <!--    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js"></script>-->
+    <!--    <script src="//cdn.jsdelivr.net/bootstrap.table/1.11.0/bootstrap-table.min.js"></script>-->
+<!--    <script src="https://cdn.jsdelivr.net/combine/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js,npm/bootstrap-table@1.15.5"></script>-->
+
+    <!--    <link rel="stylesheet" href="//cdn.jsdelivr.net/bootstrap.table/1.11.0/bootstrap-table.min.css">-->
+
+    <!--    <script type="text/javascript" src="${contextPath}/script/escapeSymbols.js"></script>-->
+    <!--    <script type="text/javascript" src="${contextPath}/script/saveTableValue.js"></script>-->
+
+
+    <!--    <script src="//cdn.jsdelivr.net/bootstrap.table/1.11.0/extensions/editable/bootstrap-table-editable.min.js"></script>-->
+    <!--    <script src="//cdn.jsdelivr.net/bootstrap.table/1.11.0/extensions/export/bootstrap-table-export.min.js"></script>-->
+    <!--    <script src="https://cdn.jsdelivr.net/bootstrap.table/1.11.0/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>-->
+    <!--    <script src="https://cdn.jsdelivr.net/bootstrap.table/1.10.1/extensions/cookie/bootstrap-table-cookie.min.js"></script>-->
+    <!--    <script src="https://cdn.jsdelivr.net/bootstrap.table/1.11.0/extensions/multiple-search/bootstrap-table-multiple-search.min.js"></script>-->
+    <!--    <script src="https://cdn.jsdelivr.net/bootstrap.table/1.11.0/extensions/multiple-sort/bootstrap-table-multiple-sort.min.js"></script>-->
+    <!--    <script src="https://cdn.jsdelivr.net/bootstrap.table/1.11.0/extensions/natural-sorting/bootstrap-table-natural-sorting.min.js"></script>-->
+    <!--    <script src="https://cdn.jsdelivr.net/bootstrap.table/1.11.0/extensions/key-events/bootstrap-table-key-events.min.js"></script>-->
+    <!--    <script src="//cdn.jsdelivr.net/bootstrap.table/1.11.0/locale/bootstrap-table-ru-RU.min.js"></script>-->
+
+
+    <!--    <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/inputs-ext/wysihtml5/wysihtml5.js"></script>-->
+    <!--    <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/jquery-editable/css/jquery-editable.css" rel="stylesheet"/>-->
+    <!--    <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/inputs-ext/wysihtml5/bootstrap-wysihtml5-0.0.2/bootstrap-wysihtml5-0.0.2.css" rel="stylesheet"/>-->
+    <!--    <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/inputs-ext/wysihtml5/bootstrap-wysihtml5-0.0.2/wysiwyg-color.css" rel="stylesheet"/>-->
+    <!--    <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/inputs-ext/wysihtml5/bootstrap-wysihtml5-0.0.2/wysihtml5-0.3.0.min.js"></script>-->
+    <!--    <script type="text/javascript" src="${contextPath}/script/bootstrap-wysihtml5-0.0.2.js" charset="UTF-8"></script><%&#45;&#45;заменил так как не показывались иконки&#45;&#45;%>-->
+
+    <!--    <script type="text/javascript" src="${contextPath}/script/xeditableTpl/refs.js" charset="UTF-8"></script>-->
+
+    <!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css">-->
+    <!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.full.min.js"></script>-->
+
+    <!--    <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-touchspin/3.1.2/jquery.bootstrap-touchspin.min.js"></script>-->
+    <!--    <link rel="stylesheet" type="text/css" media="all" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-touchspin/3.1.2/jquery.bootstrap-touchspin.min.css"/>-->
+
+    <!--    <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/js/jasny-bootstrap.min.js"></script>-->
+    <!--    <link rel="stylesheet" type="text/css" media="all" href="https://cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/css/jasny-bootstrap.min.css"/>-->
+
+    <!--    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/suggestions-jquery@17.10.0/dist/js/jquery.suggestions.min.js"></script>-->
+    <!--    <link href="https://cdn.jsdelivr.net/npm/suggestions-jquery@17.10.0/dist/css/suggestions.min.css" type="text/css" rel="stylesheet" />-->
+
+</head>
+<body>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/combine/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js,npm/bootstrap-table@1.15.5"></script>
+<script src="https://unpkg.com/bootstrap-table@1.15.5/dist/bootstrap-table-locale-all.min.js"></script>
+
+<div id="content" class="">
+    <div class="container-fluid">
+        <div id="toolbar">
+            <button id="create" class="btn btn-dark"><i class="glyphicon glyphicon-plus"></i> Создать договор
+            </button>
+            <button id="open" class="btn btn-dark" disabled><i class="glyphicon glyphicon-open"></i> Открыть
+                договор
+            </button>
+        </div>
+        <!--        <s:url action="jsonComRefData" var="jsonComRefData"/>-->
+        <!--        <s:url action="saveComRefData" var="saveComRefData"/>-->
+        <!--        <s:url action="deleteComRefData" var="deleteComRefData"/>-->
+        <!--        <s:url action="reindexData" var="reindexData"/>-->
+        <!--        <a th:href="@{/jsonContractData}" id="another">home</a><br/>-->
+        <!--        <div th:data-url="@{/jsonContractData}"></div>-->
+        <table id="table"
+               th:data-url="@{/jsonContractData}">
+        </table>
+        <script>
+            var $jQuery = jQuery.noConflict();
+            var $table = $jQuery('#table'),
+                $open = $jQuery('#open'),
+                $create = $jQuery('#create'),
+                selections = [];
+            $jQuery(function () {
+                $table.bootstrapTable({
+                    toolbar:"#toolbar",
+                    height: getHeight(),
+                    idField:"id",
+                    search:false,
+                    showRefresh:false,
+                    showPaginationSwitch:false,
+                    showColumns:false,
+                    showToggle:false,
+                    singleSelect:true,
+                    clickToSelect:true,
+                    // pagination:true,
+                    // sidePagination:"server",
+                    locale: "ru-RU",
+                    sortName:"contractNumber",
+                    columns: [
+                        {
+                            field: 'state',
+                            checkbox: true,
+                            align: 'center',
+                            valign: 'middle'
+                        }, {
+                            title: 'ID',
+                            field: 'id',
+                            name: 'id',
+                            align: 'center',
+                            valign: 'middle',
+                            width: 30 ,
+                            visible:false
+                        }, {
+                            title: 'Серия-Номер',
+                            field: 'contractNumber',
+                            valign: 'middle',
+                            align: 'center',
+                            width: 50
+                        }, {
+                            field: 'conclusionDate',
+                            title: 'Дата заключения',
+                            valign: 'middle',
+                            align: 'center',
+                            width: 150,
+                            formatter:function (value, row,index) {
+                                if(row.conclusionDate) {
+                                    var d = new Date(row.conclusionDate);
+                                    var n = d.toLocaleString('ru-RU',{year: 'numeric', month: 'numeric', day: 'numeric'});
+                                    return n;
+                                }else{
+                                    return;
+                                }
+                            }
+                        }, {
+                            field: 'insurant',
+                            title: 'Страхователь',
+                            valign: 'middle',
+                            align: 'center',
+                            width: 100,
+                            formatter: function (value, row, index) {
+                                if (row.insurant) {
+                                    return row.insurant.surname + ' ' + row.insurant.name + ' ' + (row.insurant.patronymic==null?'':row.insurant.patronymic);
+                                } else {
+                                    return;
+                                }
+                            }
+                        }, {
+                            field: 'insurance',
+                            title: 'Премия',
+                            align: 'right',
+                            valign: 'middle',
+                            width: 50,
+                            formatter: function (value, row, index) {
+                                if (row.insurance) {
+                                    return row.insurance.insurancePremium;
+                                } else {
+                                    return;
+                                }
+                            }
+                        }, {
+                            field: 'insurance',
+                            title: 'Срок действия',
+                            align: 'center',
+                            valign: 'middle',
+                            width: 100,
+                            formatter: function (value, row, index) {
+                                if (row.insurance && row.insurance.dateFrom && row.insurance.dateTo) {
+                                    var d = new Date(row.insurance.dateFrom);
+                                    var d2 = new Date(row.insurance.dateTo);
+                                    var n = d.toLocaleString('ru-RU',{year: 'numeric', month: 'numeric', day: 'numeric'});
+                                    var n2 = d2.toLocaleString('ru-RU',{year: 'numeric', month: 'numeric', day: 'numeric'});
+                                    return n+'-'+n2;
+
+                                    // return row.insurance.dateFrom + ' ' + row.insurance.dateTo;
+                                } else {
+                                    return;
+                                }
+                            }
+                        }
+
+                    ]
+                });
+                // sometimes footer render error.
+                setTimeout(function () {
+                    $table.bootstrapTable('resetView');
+                }, 200);
+                $table.on('check.bs.table uncheck.bs.table ' +
+                    'check-all.bs.table uncheck-all.bs.table', function () {
+                    if($table.bootstrapTable('getSelections').length==1) {
+                        $open.prop('disabled', !$table.bootstrapTable('getSelections').length);
+                        selections = getIdSelections();
+                    } else{
+                        $open.prop('disabled', true);
+                    }
+                });
+                $create.click(function () {
+                    document.location.href='/contractForm';
+                });
+                $open.click(function () {
+                    var ids = getIdSelections();
+                    document.location.href='/contractForm/'+ids;
+                });
+
+                // $table.on('editable-save.bs.table', function (field, row, value, _el, editEl) {
+                //     var idx = $jQuery(editEl).parents('tr[data-index]').data('index');
+                //     var ac = value.active;
+                //     if (ac != null && $jQuery.isArray(ac)) {
+                //         ac = ac[0] == '1';
+                //     }
+                //
+                //     opts = $jQuery.extend({}, value, {fieldName: row, active: ac});
+                //
+                //     $jQuery('.editable').editable('submit', {
+                //         ajaxOptions: {
+                //             url: '${savePaymentTypeData}',
+                //             type: "POST",
+                //         },
+                //         data: opts,
+                //         success: function (data) {
+                //             if (data && value.id == 0) {
+                //                 value.id = data;
+                //                 $table.bootstrapTable('updateRow', {
+                //                     index: idx,
+                //                     row: value
+                //                 });
+                //             }
+                //         }
+                //     });
+                // });
+
+                // $insert.click(function () {
+                //     $table.bootstrapTable('insertRow', {
+                //         index: 0,
+                //         row: {
+                //             id: 0,
+                //             idx: '',
+                //             commission: '',
+                //             description: '',
+                //             descriptionFull: '',
+                //             code: '',
+                //             value: '',
+                //             name: '',
+                //         }
+                //     });
+                // });
+                $jQuery(window).resize(function () {
+                    $table.bootstrapTable('resetView', {
+                        height: getHeight()
+                    });
+                });
+            });
+
+            function getIdSelections() {
+                return $jQuery.map($table.bootstrapTable('getSelections'), function (row) {
+                    return row.id
+                });
+            }
+          
+            function getHeight() {
+                return $jQuery(window).height() - $jQuery('h1').outerHeight(true);
+            }
+        </script>
+    </div>
+</div>
+</body>
+</html>

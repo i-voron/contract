@@ -1,0 +1,4 @@
+logging:
+  level:
+    vstestapp: info
+#    vstestapp: DEBUG

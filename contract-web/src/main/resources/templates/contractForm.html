@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Оформление договора</title>
+
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-table@1.15.5/dist/bootstrap-table.min.css">
+
+</head>
+<body>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/combine/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js,npm/bootstrap-table@1.15.5"></script>
+<script src="https://unpkg.com/bootstrap-table@1.15.5/dist/bootstrap-table-locale-all.min.js"></script>
+
+<div id="content" class="container">
+    <div class="row">
+    <div class="col">
+        <form id="contractForm" method="post" th:object="${contract}" class="needs-validation1 was-validated1"
+              novalidate1>
+
+            <div th:if="${#fields.hasErrors()}">
+                <span class="validationError text-danger">
+                    Пожалуйста, заполните требуемые поля и сохраните снова.
+                </span>
+            </div>
+
+            <input id="contract-id" type="hidden" th:field="*{id}">
+            <div class="card mt-2">
+                <div class="card-header">
+                    Расчет
+                </div>
+                <div class="card-body" id="insuranceForm">
+                    <div class="form-row">
+                        <div class="col-5">
+                            <div class="form-group row">
+                                <label for="insuranceAmount" class="col-auto col-form-label">Страховая сумма
+                                    <span class="text-danger">*</span></label>
+                                <div class="col">
+                                    <input type="text" maxlength="20"
+                                           th:class="${'form-control '+(#fields.hasErrors('insurance.insuranceAmount')?'is-invalid':'')}"
+                                           id="insuranceAmount" th:field="*{insurance.insuranceAmount}" required1>
+<!--                                    <div class="invalid-feedback text-center"-->
+<!--                                         th:if="${#fields.hasErrors('insurance.insuranceAmount')}"-->
+<!--                                         th:errors="*{insurance.insuranceAmount}">insurance.insuranceAmount error1-->
+<!--                                    </div>-->
+                                    <div class="invalid-feedback text-center" data-name="insurance.insuranceAmount">
+                                        <span th:text="${(#fields.hasErrors('insurance.insuranceAmount')?#fields.errors('insurance.insuranceAmount').get(0):'')}">error</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-7">
+                            <div class="form-group row">
+                                <label for="dateFrom" class="col-auto col-form-label">Срок действия с<span
+                                        class="text-danger">*</span></label>
+                                <div class="col-4">
+                                    <input type="date"
+                                           th:class="${'form-control '+(#fields.hasErrors('insurance.dateFrom')?'is-invalid':'')}"
+                                           id="dateFrom" th:field="*{insurance.dateFrom}" required1>
+<!--                                    <div class="invalid-feedback text-center"-->
+<!--                                         th:if="${#fields.hasErrors('insurance.dateFrom')}"-->
+<!--                                         th:errors="*{insurance.dateFrom}">insurance.dateFrom error-->
+<!--                                    </div>-->
+                                    <div class="invalid-feedback text-center" data-name="insurance.dateFrom">
+                                        <span th:text="${(#fields.hasErrors('insurance.dateFrom')?#fields.errors('insurance.dateFrom').get(0):'')}">error</span>
+                                    </div>
+
+                                </div>
+                                <label for="dateFrom" class="col-auto col-form-label">по<span
+                                        class="text-danger">*</span></label>
+                                <div class="col-4">
+                                    <input type="date"
+                                           th:class="${'form-control '+(#fields.hasErrors('insurance.dateTo')?'is-invalid':'')}"
+                                           id="dateTo" th:field="*{insurance.dateTo}" required1>
+<!--                                    <div class="invalid-feedback text-center"-->
+<!--                                         th:if="${#fields.hasErrors('insurance.dateTo')}"-->
+<!--                                         th:errors="*{insurance.dateTo}">insurance.dateTo error-->
+<!--                                    </div>-->
+                                    <div class="invalid-feedback text-center" data-name="insurance.dateTo">
+                                        <span th:text="${(#fields.hasErrors('insurance.dateTo')?#fields.errors('insurance.dateTo').get(0):'')}">error</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-5">
+                            <div class="form-group row">
+                                <label class="col-auto col-form-label" for="realtyType">Тип недвижимости<span
+                                        class="text-danger">*</span></label>
+                                <div class="col">
+                                    <select th:class="${'custom-select '+(#fields.hasErrors('insurance.realtyType')?'is-invalid':'')}"
+                                            id="realtyType" th:field="*{insurance.realtyType}" required1>
+                                        <option value="-1">Выберите...</option>
+                                        <option th:each="rt : ${rtList}" th:value="${rt.id}" th:text="${rt.name}"
+                                                th:selected="${insurance!=null && rt.id==insurance.realtyType.id}">
+                                        </option>
+                                    </select>
+<!--                                    <div class="invalid-feedback text-center"-->
+<!--                                         th:if="${#fields.hasErrors('insurance.realtyType')}"-->
+<!--                                         th:errors="*{insurance.realtyType}">insurance.realtyType error-->
+<!--                                    </div>-->
+                                    <div class="invalid-feedback text-center" data-name="insurance.realtyType">
+                                        <span th:text="${(#fields.hasErrors('insurance.realtyType')?#fields.errors('insurance.realtyType').get(0):'')}">error</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-5"></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-5">
+                            <div class="form-group row">
+                                <label for="yearOfConstruction" class="col-auto col-form-label">Год постройки<span
+                                        class="text-danger">*</span></label>
+                                <div class="col">
+                                    <input type="text" maxlength="4"
+                                           th:class="${'form-control '+(#fields.hasErrors('insurance.yearOfConstruction')?'is-invalid':'')}"
+                                           id="yearOfConstruction"
+                                           th:field="*{insurance.yearOfConstruction}" required1>
+<!--                                    <div class="invalid-feedback text-center"-->
+<!--                                         th:if="${#fields.hasErrors('insurance.yearOfConstruction')}"-->
+<!--                                         th:errors="*{insurance.yearOfConstruction}">insurance.yearOfConstruction error-->
+<!--                                    </div>-->
+                                    <div class="invalid-feedback text-center" data-name="insurance.yearOfConstruction">
+                                        <span th:text="${(#fields.hasErrors('insurance.yearOfConstruction')?#fields.errors('insurance.yearOfConstruction').get(0):'')}">error</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--                    <div class="col"></div>-->
+                        <div class="col-5">
+                            <div class="form-group row">
+                                <label for="area" class="col-auto col-form-label">Площадь, кв.м.<span
+                                        class="text-danger">*</span></label>
+                                <div class="col">
+                                    <input type="text" maxlength="10"
+                                           th:class="${'col form-control '+(#fields.hasErrors('insurance.area')?'is-invalid':'')}"
+                                           id="area"
+                                           th:field="*{insurance.area}" required1>
+<!--                                    <div class="invalid-feedback text-center"-->
+<!--                                         th:if="${#fields.hasErrors('insurance.area')}"-->
+<!--                                         th:errors="*{insurance.area}">insurance.area error-->
+<!--                                    </div>-->
+                                    <div class="invalid-feedback text-center" data-name="insurance.area">
+                                        <span th:text="${(#fields.hasErrors('insurance.area')?#fields.errors('insurance.area').get(0):'')}">error</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row pb-2">
+                        <div class="mx-auto">
+                            <button id="calcButton" class="btn btn-dark" type="button">Расчитать</button>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-5">
+                            <div class="form-group row">
+                                <label for="calculationDate" class="col-auto col-form-label">Дата расчета<span
+                                        class="text-danger">*</span></label>
+                                <div class="col">
+                                    <input type="date"
+                                           th:class="${'form-control '+(#fields.hasErrors('insurance.calculationDate')?'is-invalid':'')}"
+                                           id="calculationDate"
+                                           th:field="*{insurance.calculationDate}" readonly>
+                                    <div class="invalid-feedback text-center"
+                                         th:if="${#fields.hasErrors('insurance.calculationDate')}"
+                                         th:errors="*{insurance.calculationDate}">insurance.calculationDate error
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-5">
+                            <div class="form-group row">
+                                <label for="insurancePremium" class="col-auto col-form-label">Премия<span
+                                        class="text-danger">*</span></label>
+                                <div class="col">
+                                    <input type="text"
+                                           th:class="${'form-control '+(#fields.hasErrors('insurance.insurancePremium')?'is-invalid':'')}"
+                                           id="insurancePremium" maxlength="20"
+                                           th:field="*{insurance.insurancePremium}" required1>
+                                    <div class="invalid-feedback text-center"
+                                         th:if="${#fields.hasErrors('insurance.insurancePremium')}"
+                                         th:errors="*{insurance.insurancePremium}">insurance.insurancePremium error
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row mt-2">
+                <div class="col-5">
+                    <div class="form-group row">
+                        <label for="contractNumber" class="col-auto col-form-label">Номер договора<span
+                                class="text-danger">*</span></label>
+                        <div class="col">
+                            <input type="text" maxlength="20"
+                                   th:class="${'form-control '+(#fields.hasErrors('contractNumber')?'is-invalid':'')}"
+                                   id="contractNumber"
+                                   th:field="*{contractNumber}" required1>
+                            <div class="invalid-feedback text-center"
+                                 th:if="${#fields.hasErrors('contractNumber')}"
+                                 th:errors="*{contractNumber}">contractNumber error
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-5">
+                    <div class="form-group row">
+                        <label for="conclusionDate" class="col-auto col-form-label">Дата заключения</label>
+                        <div class="col">
+                            <input type="date" class="form-control" id="conclusionDate" th:field="*{conclusionDate}"
+                                   readonly>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <h5 class="card-header">
+                    Страхователь
+                </h5>
+                <div class="card-body" id="insurantForm">
+                    <input id="insurant-id" type="hidden" th:field="*{insurant.id}">
+                    <input id="surname" type="hidden" th:field="*{insurant.surname}" required1>
+                    <input id="name" type="hidden" th:field="*{insurant.name}" required1>
+                    <input id="patronymic" type="hidden" th:field="*{insurant.patronymic}">
+                    <div class="form-row">
+                        <div class="col-auto">
+                            <button type="button" id="selectButton" class="btn btn-dark">Выбрать</button>
+                        </div>
+                        <div class="col">
+                            <div class="form-group row">
+                                <label for="fio" class="col-auto col-form-label">ФИО<span
+                                        class="text-danger">*</span></label>
+                                <div class="col">
+                                    <input type="text"
+                                           th:class="${'form-control '+(#fields.hasErrors('insurant.surname')?'is-invalid':'')}"
+                                           id="fio"
+                                           th:value="${(contract.insurant.surname==null?'':contract.insurant.surname)+' '+(contract.insurant.name==null?'':contract.insurant.name)+' '+(contract.insurant.patronymic==null?'':contract.insurant.patronymic)}"
+                                           readonly>
+                                    <div class="invalid-feedback text-center"
+                                         th:if="${#fields.hasErrors('insurant.surname')}"
+                                         th:errors="*{insurant.surname}">insurant.surname error
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <button id="editButton" class="btn btn-dark" type="button">Изменить</button>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="form-group row">
+                                <label for="birthday" class="col-auto col-form-label">Дата рождения</label>
+                                <div class="col">
+                                    <input type="date" class="form-control" id="birthday"
+                                           th:field="*{insurant.birthday}" readonly required1>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group row">
+                                <label for="passport-series" class="col-auto col-form-label">Паспорт серия</label>
+                                <div class="col">
+                                    <input type="text" class="form-control" id="passport-series"
+                                           th:field="*{insurant.passport.series}" readonly required1>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group row">
+                                <label for="passport-number" class="col-auto col-form-label">№</label>
+                                <div class="col">
+                                    <input type="text" class="form-control" id="passport-number"
+                                           th:field="*{insurant.passport.number}" readonly required1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card mt-2">
+                <div class="card-header">
+                    Адрес недвижимости
+                </div>
+                <div class="card-body" id="addressForm">
+                    <div class="form-row text-center">
+                        <div class="col">
+                            <input type="text"
+                                   th:class="${'form-control '+(#fields.hasErrors('address.country')?'is-invalid':'')}"
+                                   id="country"
+                                   th:field="*{address.country}" required1>
+                            <div class="invalid-feedback text-center"
+                                 th:if="${#fields.hasErrors('address.country')}"
+                                 th:errors="*{address.country}">address.country error
+                            </div>
+                            <label for="country" class="small">государство<span class="text-danger">*</span></label>
+                        </div>
+                        <div class="col">
+                            <input type="text" class="form-control" id="zip" th:field="*{address.zip}">
+                            <label for="zip" class="small">индекс</label>
+                        </div>
+                        <div class="col">
+                            <input type="text"
+                                   th:class="${'form-control '+(#fields.hasErrors('address.region')?'is-invalid':'')}"
+                                   id="region"
+                                   th:field="*{address.region}" required1>
+                            <div class="invalid-feedback text-center"
+                                 th:if="${#fields.hasErrors('address.region')}"
+                                 th:errors="*{address.region}">address.region error
+                            </div>
+                            <label for="region" class="small">республика, край, область<span
+                                    class="text-danger">*</span></label>
+                        </div>
+                        <div class="col">
+                            <input type="text" class="form-control" id="district" th:field="*{address.district}">
+                            <label for="district" class="small">район</label>
+                        </div>
+                    </div>
+                    <div class="form-row text-center">
+                        <div class="col">
+                            <input type="text"
+                                   th:class="${'form-control '+(#fields.hasErrors('address.city')?'is-invalid':'')}"
+                                   id="city"
+                                   th:field="*{address.city}" required1>
+                            <div class="invalid-feedback text-center"
+                                 th:if="${#fields.hasErrors('address.city')}"
+                                 th:errors="*{address.city}">address.city error
+                            </div>
+                            <label for="city" class="small">населенный пункт<span class="text-danger">*</span></label>
+                        </div>
+                        <div class="col">
+                            <input type="text"
+                                   th:class="${'form-control '+(#fields.hasErrors('address.street')?'is-invalid':'')}"
+                                   id="street"
+                                   th:field="*{address.street}" required1>
+                            <div class="invalid-feedback text-center"
+                                 th:if="${#fields.hasErrors('address.street')}"
+                                 th:errors="*{address.street}">address.street error
+                            </div>
+                            <label for="street" class="small">улица<span class="text-danger">*</span></label>
+                        </div>
+                        <div class="col">
+                            <input type="text" maxlength="5" class="form-control" id="house" th:field="*{address.house}">
+                            <label for="house" class="small">дом</label>
+                        </div>
+                        <div class="col">
+                            <input type="text" maxlength="5" class="form-control" id="corpus" th:field="*{address.corpus}">
+                            <label for="corpus" class="small">корпус</label>
+                        </div>
+                        <div class="col">
+                            <input type="text" maxlength="5" class="form-control" id="building" th:field="*{address.building}">
+                            <label for="building" class="small">строение</label>
+                        </div>
+                        <div class="col">
+                            <input type="text" maxlength="4" class="form-control" id="flat"
+                                   th:class="${'form-control '+(#fields.hasErrors('address.flat')?'is-invalid':'')}"
+                                   th:field="*{address.flat}" required1>
+                            <div class="invalid-feedback text-center"
+                                 th:if="${#fields.hasErrors('address.flat')}"
+                                 th:errors="*{address.flat}">address.flat error
+                            </div>
+                            <label for="flat" class="small">квартира<span class="text-danger">*</span></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card mt-2 mb-2">
+                <div class="card-header">
+                    Комментарий
+                </div>
+                <div class="card-body" id="commentForm">
+                    <div class="form-group row">
+                        <label for="comments" class="col-sm-3 col-form-label">Комментарий к договору (не пучатается на
+                            полисе)</label>
+                        <div class="col-sm-9">
+                            <textarea id="comments" class="form-control" th:field="*{comments}"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+            <div class="col-auto mx-auto">
+                <button id="save" class="btn btn-dark" type="submit"><i class="glyphicon glyphicon-plus"></i> Сохранить
+                </button>
+                <button id="back" class="btn btn-dark" type="button"><i class="glyphicon glyphicon-open"></i> К списку
+                    договоров
+                </button>
+            </div>
+            </div>
+
+        </form>
+    </div>
+    </div>
+</div>
+<br>
+
+<div class="modal" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalCenterTitle"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalCenterTitle">Клиент</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button id="saveEditModalButton" type="button" class="btn btn-dark">Сохранить
+                </button>
+                <button id="backEditModalButton" type="button" class="btn btn-secondary" data-dismiss="modal">
+                    Отменить
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="selectModal" tabindex="-1" role="dialog" aria-labelledby="selectModalCenterTitle"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="selectModalCenterTitle">Клиент</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button id="chooseSelectModalButton" class="btn btn-dark" data-dismiss="modal" type="button"><i
+                        class="glyphicon glyphicon-plus"></i> Выбрать
+                </button>
+                <button id="newSelectModalButton" class="btn btn-dark" data-dismiss="modal" type="button"><i
+                        class="glyphicon glyphicon-open"></i> Новый
+                </button>
+                <button id="closeSelectModalButton" class="btn btn-secondary" data-dismiss="modal" type="button"><i
+                        class="glyphicon glyphicon-open"></i> Закрыть
+                </button>
+                <!--                <button id="backSelectModalButton" type="button" class="btn btn-secondary" data-dismiss="modal">Отменить</button>-->
+                <!--                <button id="saveSelectModalButton" type="button" class="btn btn-dark">Сохранить</button>-->
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var $jQuery = jQuery.noConflict();
+    var GlobalObj = {"isNew": false};
+
+    $jQuery('#back').click(function () {
+        document.location.href = '/';
+    });
+    $jQuery('#save').click(function () {
+    });
+    $jQuery('#calcButton').click(function () {
+        clearFormError("#insuranceForm");
+        // var opts =$jQuery("#insuranceForm").find("select,input").serializeArray();
+        var opts = getFormObject("#insuranceForm", "insurance.");
+        opts['realtyType'] = {'id': opts['realtyType']};
+        // console.log(JSON.stringify(opts));
+        $jQuery.ajax({
+            url: '/jsonInsuranceCalculate',
+            type: "POST",
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(opts),
+            async: true
+        }).done(function (data) {
+            console.log("done", data);
+            if (data) {
+                if (data.errors) {
+                    setFormError("#insuranceForm", data.errors,true);
+                } else {
+                    $jQuery("#calculationDate").val(data.calculationDate);
+                    $jQuery("#insurancePremium").val(data.insurancePremium);
+                }
+            }
+        }).fail(function (data) {
+            console.log("fail", data);
+        });
+
+    });
+
+
+    $jQuery('#editButton').click(function () {
+        if ($jQuery('#editModal .modal-body').text().trim() === "..."){
+            $jQuery('#editModal .modal-body').load("/insurantEditForm");
+            console.log(GlobalObj.isNew);
+        }
+        $jQuery('#editModal').modal('toggle');
+    });
+    $jQuery('#editModal').on('show.bs.modal', function (e) {
+        // console.log("GlobalObj.isNew", GlobalObj.isNew);
+        var fields = getFormObject("#insurantForm", "insurant.");
+        console.log(fields,GlobalObj.isNew);
+        if (fields.id==="" && !GlobalObj.isNew) {
+            e.preventDefault();
+        }
+        if (fields.id!=="" || (fields.id==="" && GlobalObj.isNew)) {
+        // if (!GlobalObj.isNew) {
+            // console.log(JSON.stringify(fields));
+            $jQuery.each(fields, function (name, value) {
+                $jQuery('#' + name.replace(".", "-") + "Form", "#insurantEditForm").val(value);
+            });
+        }else{
+            e.preventDefault();
+        }
+        GlobalObj.isNew = false;
+    });
+    $jQuery('#backEditModalButton').click(function () {
+        $jQuery("#editModal form")[0].reset();
+        clearFormError("#insurantEditForm");
+    });
+    $jQuery('#saveEditModalButton').click(function () {
+        clearFormError("#insurantEditForm");
+        var opts = getFormObject("#insurantEditForm");
+        opts['passport'] = {'series': opts['passport.series'], 'number': opts['passport.number']};
+        console.log(JSON.stringify(opts));
+
+        $jQuery.ajax({
+            url: '/jsonSaveInsurantFormData',
+            type: "POST",
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(opts),
+            async: true
+        }).done(function (data) {
+            console.log("done", data);
+            if (data) {
+                if (data.errors) {
+                    setFormError("#insurantEditForm", data.errors);
+                } else if (data.insurant) {
+                    clearFormError("#insurantEditForm");
+                    setFormData("#insurantForm input", data);
+                    var s = getValueByDotNotation(data, "insurant.surname");
+                    var s2 = getValueByDotNotation(data, "insurant.name");
+                    var s3 = getValueByDotNotation(data, "insurant.patronymic");
+                    $jQuery("#insurantForm #fio").val([s, s2, s3].join(' '));
+
+                    $jQuery('#editModal').modal('toggle');
+                }
+            }
+        }).fail(function (data) {
+            console.log("fail", data);
+        });
+    });
+
+    $jQuery('#selectButton').click(function () {
+        if ($jQuery('#selectModal .modal-body').text().trim() === "...")
+            $jQuery('#selectModal .modal-body').load("/insurantSelect");
+        $jQuery('#selectModal').modal('toggle');
+    });
+    $jQuery('#newSelectModalButton').click(function () {
+        GlobalObj.isNew = true;
+        $jQuery('#editButton').click();
+    });
+    $jQuery('#chooseSelectModalButton').click(function () {
+        var sel = $tableIS.bootstrapTable('getSelections');
+        // console.log(sel);
+        if (sel.length > 0) {
+            setFormData("#insurantForm input", sel[0], "insurant.");
+            var s = getValueByDotNotation(sel[0], "surname");
+            var s2 = getValueByDotNotation(sel[0], "name");
+            var s3 = getValueByDotNotation(sel[0], "patronymic");
+            $jQuery("#insurantForm #fio").val([s, s2, s3].join(' '));
+        }
+    });
+    $jQuery('#selectModal').on('hidden.bs.modal', function (e) {
+        $jQuery("#selectModal form")[0].reset();
+        $tableIS.bootstrapTable('removeAll');
+    });
+
+
+    function setFormData(formElementSelector, data, excludePath) {
+        $jQuery.each($jQuery(formElementSelector), function (i, el) {
+            var _el = $jQuery(el);
+            var elName = _el.attr("name");
+            if (elName !== undefined) {
+                _el.val(getValueByDotNotation(data, elName.replace(excludePath, "")));
+            }
+        });
+    }
+    function setFormError(formElementId, errors, needObjectName) {
+        // $jQuery.each($jQuery([formElementId," :input"].join(" ")), function (i, el) {
+        $jQuery.each($jQuery(formElementId).find("select,input"), function (i, el) {
+            var _el = $jQuery(el);
+            var elName = _el.attr("name");
+            if (elName !== undefined) {
+
+                $jQuery.each(errors, function (i, err) {
+                    var objectName=getValueByDotNotation(err,"objectName");
+                    var field=getValueByDotNotation(err,"field");
+                    var errVal=needObjectName?[objectName,field].join("."):field;
+                    if(elName===errVal){
+                        _el.addClass('is-invalid');
+                        $jQuery(formElementId+' div[data-name="'+elName+'"]').text(getValueByDotNotation(err,"defaultMessage"));
+                    }
+                });
+            }
+        });
+    }
+   function clearFormError(formElementId) {
+        $jQuery.each($jQuery(formElementId).find("select,input"), function (i, el) {
+            var _el = $jQuery(el);
+            var elName = _el.attr("name");
+            if (elName !== undefined) {
+                _el.removeClass('is-invalid');
+            }
+        });
+    }
+
+    function getValueByDotNotation(obj, path) {
+        return new Function('_', 'return _.' + path)(obj);
+    }
+
+    function getFormObject(formSelector, excludeNamePath) {
+        var fields = $jQuery(formSelector).find("select,input").serializeArray();
+        var opts = {};
+        $jQuery.each(fields, function (i, field) {
+            opts[field.name.replace(excludeNamePath, "")] = field.value;
+        });
+        return opts;
+    }
+
+</script>
+
+</body>
+</html>
